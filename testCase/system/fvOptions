@@ -41,11 +41,10 @@ codedSource
             Info<< "**codeCorrect**" << endl;
         #};
 
-        codeAddSup//codeAddSupRho
+        codeAddSup
         #{
             scalar t = mesh().time().value();
             const scalarField& V = mesh_.V();
-//            const volScalarField& myrho = mesh().lookupObject<volScalarField>("rho");
             scalarField& heSource = eqn.source();
             const scalar epsilon=1.0;
             const scalar gamma=1.4;
@@ -57,9 +56,7 @@ codedSource
             const scalar tStar=1.0;//delta/c0;
             Info << "R, c0, tStar=" << R << ", "  << c0  << ", " << tStar << endl;
             scalar alpha=std::log(2.0)/9.0;
-            scalar omega=constant::mathematical::pi*20.0;///15.0;
-//            scalar r;
-//            const scalar rLim=30.0;
+            scalar omega=constant::mathematical::pi*20.0;
           
             // Start time
             const scalar startTime = 0.1;
@@ -73,18 +70,8 @@ codedSource
                 // Apply the source
                 forAll(cellPos, i)
                 {
-//                    r=mag(cellPos[i]);
-//                    if (r <= rLim)
-//                    {
-                         // cell volume specific source
-                         //heSource[i] += epsilon*sin(omega*t)*exp(-alpha*(pow(cellPos[i].component(0),2)+pow(cellPos[i].component(1),2)))*V[i]*rho[i];
-                         //heSource[i] += p0*gamma/(gamma-1.0)*c0/delta*(epsilon*sin(omega*(t-startTime)/tStar)*exp(-alpha*(pow(cellPos[i].component(0)/delta,2)+pow(cellPos[i].component(1)/delta,2))))*V[i];
-                         heSource[i] += gamma*p0/(gamma-1)/tStar*(epsilon*sin(omega*(t-startTime))*exp(-alpha*(pow(cellPos[i].component(0),2)+pow(cellPos[i].component(1),2))))*V[i];
-//                    }
-//                    else
-//                    {
-//                         heSource[i] += 0.0;
-//                    }
+                         heSource[i] += gamma*p0/(gamma-1)/tStar*(epsilon*sin(omega*(t-startTime))\
+                           *exp(-alpha*(pow(cellPos[i].component(0),2)+pow(cellPos[i].component(1),2))))*V[i];
                 }
             }
             Info<< "**codeAddSupRho**" << endl;
@@ -98,7 +85,7 @@ codedSource
         code
         #{
             $codeCorrect
-            $codeAddSup//$codeAddSupRho
+            $codeAddSup
             $codeConstrain
         #}; 
     }
