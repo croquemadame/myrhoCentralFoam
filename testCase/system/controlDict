@@ -15,8 +15,6 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-//libs            (libwaveTransmissivePulse);
-
 application     myrhoCentralFoam;//rhoPimpleFoam;
 
 startFrom       startTime;//latestTime;
@@ -55,9 +53,6 @@ maxDeltaT       1e-5;
 
 functions
 {
-//        #include "probeControl"
-//        #include "fwhControl"
-//        #include "sphereAverage"
 }
 
 // ************************************************************************* //
